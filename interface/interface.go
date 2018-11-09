@@ -9,6 +9,7 @@ type Face interface {
 type RedFace struct {
 	color string
 }
+
 type BlackFace struct {
 	color string
 }
