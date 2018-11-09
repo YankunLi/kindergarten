@@ -23,6 +23,8 @@ type answer struct {
 	Result string `json:"result"`
 }
 
+var sum = make(map[string]map[string]int)
+
 func decode(data []byte) string {
 
 	var ret result
@@ -38,6 +40,12 @@ func decode(data []byte) string {
 	for k, v := range ret.Answers {
 		num, _ := strconv.Atoi(k)
 		kv[num] = v.Result
+		if v.Type == "choice" {
+			if sum[k] == nil {
+				sum[k] = make(map[string]int)
+			}
+			sum[k][v.Result] = sum[k][v.Result] + 1
+		}
 	}
 
 	var keys []int
@@ -71,7 +79,7 @@ func main() {
 	projectName := *projectP
 	outFilePath := "out_" + projectName
 	//connect db
-	db, err := sql.Open("mysql", "user:password@tcp(IP:3306)/questionnaire?charset=utf8")
+	db, err := sql.Open("mysql", "comment:QWE123@tcp(10.148.13.94:3306)/questionnaire?charset=utf8")
 	if err != nil {
 		fmt.Println("open db fail")
 		panic("fail")
@@ -92,6 +100,13 @@ func main() {
 	for rows.Next() {
 		rows.Scan(&outdata)
 		fd.WriteString(decode([]byte(outdata)) + "\n")
+	}
+	count := len(sum)
+	for sk, sv := range sum {
+		fmt.Println("第 ", sk, " 题: ")
+		for k, v := range sv {
+			fmt.Println("\t", k, "\t:\t", v, "\t", v*100/count, "%")
+		}
 	}
 
 }
