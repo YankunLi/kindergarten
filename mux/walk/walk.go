@@ -49,17 +49,17 @@ func main() {
 		fmt.Println(err)
 	}
 
-	//http.Handle("/", r)
+	http.Handle("/", r)
 
-	srv := &http.Server{
-		Addr:         "0.0.0.0:8080",
-		WriteTimeout: time.Second * 15,
-		ReadTimeout:  time.Second * 15,
-		IdleTimeout:  time.Second * 60,
-		Handler:      r,
-	}
+	// srv := &http.Server{
+	// 	Addr:         "0.0.0.0:8080",
+	// 	WriteTimeout: time.Second * 15,
+	// 	ReadTimeout:  time.Second * 15,
+	// 	IdleTimeout:  time.Second * 60,
+	// 	Handler:      r,
+	// }
 
-	if err := srv.ListenAndServe(); err != nil {
-		panic(err)
-	}
+	// if err := srv.ListenAndServe(); err != nil {
+	// 	panic(err)
+	// }
 }
