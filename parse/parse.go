@@ -70,6 +70,11 @@ func decode(data []byte) string {
 func main() {
 	//parse parmater
 	var projectP *string = flag.String("project", "", "project name")
+	var database *string = flag.String("database", "", "database name")
+	var dbUser *string = flag.String("dbUser", "", "database user name")
+	var dbPassword *string = flag.String("dbPassword", "", "database password")
+	var dbServer *string = flag.String("dbServer", "", "database endpoint")
+
 	flag.Parse()
 	if *projectP == "" {
 		fmt.Printf("not found project %s", *projectP)
@@ -79,7 +84,7 @@ func main() {
 	projectName := *projectP
 	outFilePath := "out_" + projectName
 	//connect db
-	db, err := sql.Open("mysql", "comment:QWE123@tcp(10.148.13.94:3306)/questionnaire?charset=utf8")
+	db, err := sql.Open("mysql", *dbUser+":"+*dbPassword+"@tcp("+*dbServer+":4335)/"+*database+"?charset=utf8")
 	if err != nil {
 		fmt.Println("open db fail")
 		panic("fail")
