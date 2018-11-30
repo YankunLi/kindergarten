@@ -84,7 +84,7 @@ func main() {
 	projectName := *projectP
 	outFilePath := "out_" + projectName
 	//connect db
-	db, err := sql.Open("mysql", *dbUser+":"+*dbPassword+"@tcp("+*dbServer+":4335)/"+*database+"?charset=utf8")
+	db, err := sql.Open("mysql", *dbUser+":"+*dbPassword+"@tcp("+*dbServer+")/"+*database+"?charset=utf8")
 	if err != nil {
 		fmt.Println("open db fail")
 		panic("fail")
